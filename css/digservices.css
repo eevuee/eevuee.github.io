@@ -1,0 +1,10 @@
+body {
+  background: lightblue;
+  font-family: sans-serif;
+}
+.seal {
+  border: dotted 3px;
+  float: left;
+  margin-right: 20px;
+  border-radius: 20px;
+}
