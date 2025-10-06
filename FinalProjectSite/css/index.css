@@ -1,0 +1,241 @@
+/*Setting the general style, I don't want the user to be able to scroll horizontally*/
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  min-height: 100vh;
+  font-family: "Courier New", Times, serif;
+  box-sizing: border-box;
+}
+
+/*Background image*/
+.bgimage {
+  position: fixed;
+  inset: 0;
+  background-image: url("../images/zodiacpicture.png");
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+}
+
+/*Cool thing I learned, makes it so I don't have to spam line breaks*/
+p {
+  white-space: pre-line;
+}
+
+h1 {
+  font-size: 80px;
+  color: white;
+  text-align: center;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  animation: titleanimation 1s;
+}
+
+/*Sidebar settings, this whole element was a headache but I was stubborn*/
+.sidebar {
+  width: 10%;
+  height: 100%;
+  position: fixed;
+  background-color: white;
+  overflow: auto;
+  z-index: 50;
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar a {
+  display: block;
+  color: darkblue;
+  padding: 16px;
+}
+/*I originally thought I might make these different colors but ultimately ended up using the same color for hover and active*/
+.sidebar a.active,
+.sidebar a:hover:not(.active) {
+  background-color: #230063;
+  color: white;
+}
+
+/*I had these separate for the longest time before realizing I could combine them and shave off 30% of the length of this file*/
+.text-block,
+.info-block,
+.comm-block,
+.socials-block {
+  background-color: white;
+  color: darkblue;
+  padding: 20px;
+  max-width: 80%;
+  margin-left: 220px;
+  overflow: visible;
+  z-index: 2;
+  animation: blockanimation 1s ease-out forwards; /*I tested different kinds of animations for a long time but ended up liking this one the most*/
+}
+.text-block { /*Had to tweak the index text block to stay at the bottom*/
+  position: absolute;
+  bottom: 10%;
+  right: 3%;
+  transform: scale(0.8);
+}
+
+.info-block { 
+  margin-top: 40px; 
+  display: flex;
+  flex-direction: column;
+  align-items: center; /*Added flexbox to center the framed inmage you will see later*/
+}
+
+/*The commission price table ended up being pretty tricky because I didn't
+want it to stay too plain plus I knew I had very few elements in my website so I wanted to compensate*/
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+table {
+  width: 80%;
+  margin: 30px auto;
+  border-collapse: collapse;
+  background: white;
+  box-shadow: 0 4px 20px black;
+  font-family: "Courier New", Times, serif;
+}
+
+th {
+  background-color: #230063;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: bold;
+  padding: 15px 20px;
+  text-align: center;
+  border-bottom: 2px solid #150043;
+}
+
+td {
+  color: darkblue;
+  padding: 14px 20px;
+  text-align: center;
+  border-bottom: 1px solid black;
+}
+
+/*I knew I was going to have a plain site so I wanted to try something fancy,
+though I know "what if I fit a gif inside of a png of a frame" isn't the smartest idea
+for someone with my level of skill. Somehow it worked? I did get some help from a friend in coding for the aspect ratio and clipping stuff on this part*/
+.framed {
+  position: relative;
+  width: min(90%, 600px);
+  aspect-ratio: 800 / 585;
+  margin: 40px 0;
+  overflow: visible;
+}
+
+.framed .photo,
+.framed .frame {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.framed .photo {
+  z-index: 1;
+  clip-path: inset(8% 7% 8% 7%);
+  object-fit: cover;
+}
+
+.framed .frame {
+  z-index: 2;
+}
+
+/*Icons for the socials page*/
+.socials-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  margin-top: 30px;
+  text-align: center;
+}
+
+/*I wanted the footer to stay on top at all times*/
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  color: darkblue;
+  text-align: center;
+  padding: 10px;
+  z-index: 100;
+}
+
+/*ANIMATIONS*/
+/*At first I was going to use JS for fancier stuff but then I started looking into css animations
+and ended up being pretty happy with these two*/
+@keyframes blockanimation {
+  0% { opacity: 0; transform: translateY(30px) scale(0.6); }
+  100% { opacity: 1; transform: translateY(0) scale(0.8); }
+}
+
+@keyframes titleanimation {
+  0% { top: 0; }
+  100% { top: 40%; }
+}
+
+/*MOBILE*/
+
+/*For phones*/
+@media screen and (max-width: 650px) {
+
+  /*Change sidebar from a sidebar to a topbar..?*/
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 10px 0;
+  }
+
+  .sidebar a {
+    text-align: center;
+    padding: 10px;
+  }
+
+  /*Text blocks*/
+  .text-block,
+  .info-block,
+  .comm-block,
+  .socials-block {
+    position: relative;
+    margin: 20px;
+    margin-bottom: 80px;
+    margin-left: 0;
+    max-width: 100%;
+    transform: none;
+  }
+
+  /*Hiding the header with the username for smaller screens*/
+  h1 { 
+    display: none; 
+  }
+
+  /*Had issues with the scaling on the frame*/
+  .framed { 
+    width: min(90vw, 600px);
+  }
+
+  /*Adjusting comm table*/
+  table {
+    width: 100%;
+    font-size: 14px;
+  }
+  th, td { padding: 10px; }
+}
+/*done yay*/
